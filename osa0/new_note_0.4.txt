@@ -1,0 +1,48 @@
+VAIHE 1.
+    selain lähettää lomakkeen tiedot palvelimelle, jolloin Form dataan asetetaan: 
+    notes: <lähetettävän viestin sisältö> eli
+
+    selain->palvelin HTTP POST https://studies.cs.helsinki.fi/exampleapp/new_note
+
+    Lähetyksen seurauksena consoleen printataan data.json tiedoston mukaiset muistiinpanot.
+
+VAIHE 2.
+    Kun uuden muistiinpanon lähetys on tapahtunut, palvelin vastaa selaimelle HTML-tiedostolla,
+    jota selain ensin pyytää ja joka on käytännössä sama kuin alunperinkin, nyt muistiinpanot 
+    vain sisältävät uuden lisätyn muistiinpanon (alempana selviää kuinka data ladataan):
+
+    selain->palvelin HTTP GET https://studies.cs.helsinki.fi/exampleapp/notes
+    palvelin->selain HTML
+
+VAIHE 3.
+    Edellisen kohdan HTML-dokumentin head-osiossa oleva viittaus tyylitiedostoon suoritetaan 
+    HTML-renderöinnin yhteydessä, eli tyylitiedostoa pyydetään palvelimelta HTML-tiedostoon
+    määritellyllä link-tagilla (koska viittaus on sijoitettu head-tagien sisään suoritetaan se 
+    ennen varsinaisen body-osiossa olevan HTML:n suorittamista):
+
+    selain->palvelin HTTP GET https://studies.cs.helsinki.fi/exampleapp/main.css
+    palvelin->selain main.css
+
+VAIHE 4.
+    HTML-dokumentin head-osiossa oleva viittaus javascript-tiedostoon main.js suoritetaan myös HTML-
+    renderöinnin yhteydessä (koska viittaus on sijoitettu head-tagien sisään suoritetaan se 
+    ennen varsinaisen body-osiossa olevan HTML:n suorittamista):
+
+    selain->palvelin HTTP GET https://studies.cs.helsinki.fi/exampleapp/main.js
+    palvelin->selain main.js
+
+VAIHE 5.
+    main.js tiedostossa määritellään datan lataus palvelimella olevasta data.json tiedostosta. 
+    Palvelin vastaa selaimen pyyntöön seuraavasti:
+
+    selain->palvelin HTTP GET https://studies.cs.helsinki.fi/exampleapp/data.json
+    palvelin->selain data.json
+
+VAIHE 6.
+    Selain pyytää vielä faviconia, joka on selaimen välilehden/tabin vasemmassa reunassa näytettävä kuvake:
+
+    selain->palvelin HTTP GET https://studies.cs.helsinki.fi/favicon.ico
+    palvelin->selain favicon.ico
+
+
+
