@@ -1,0 +1,34 @@
+VAIHE 1.
+
+    Selain pyytää palvelimelta kohdetta /spa ja palvelin vastaa HTML-tiedostolla,
+    jota aletaan suorittaa.
+
+    selain->palvelin HTTP GET https://studies.cs.helsinki.fi/exampleapp/spa
+    palvelin->selain HTML
+
+VAIHE 2.
+
+    HTML-dokumentin head-osioon on tehty link-tagi, joka sisältää viittauksen tyyli-
+    tiedostoon nimeltään main.css. Tätä tiedostoa aletaan suorittaa ensimmäisenä.
+
+    selain->palvelin HTTP GET https://studies.cs.helsinki.fi/exampleapp/main.css
+    palvelin->selain main.css
+
+VAIHE 3.
+
+    HTML-dokumentissa on seuraavana script-tagi, jonka lähteeksi on merkattu 
+    /exampleapp/spa.js. Tämä js-dokumentti suoritetaan seuraavana.
+
+    selain->palvelin HTTP GET https://studies.cs.helsinki.fi/exampleapp/spa.js
+    palvelin->selain spa.js
+
+    Muistiinpanot haetaan spa.js tiedostossa määritellyllä GET-pyynnöllä, ja 
+    sen jälkeen HTML-dokumenttia muokataan sen mukaan kuinka monta muistiinpanoa
+    on olemassa. Muistiinpanot luodaan ul-tagien sisään. Jokainen muistiinpano
+    luodaan li-elementin sisään. 
+
+    selain->palvelin GET https://studies.cs.helsinki.fi/exampleapp/data.json
+    palvelin->selain [{"content":"asdadsd","date":"2021-07-18 ...
+
+    
+
