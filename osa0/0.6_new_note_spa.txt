@@ -1,0 +1,16 @@
+VAIHE 1. 
+
+	Sivulle saavuttaessa spa.js tiedostossa määritellään tyhjä notes Array. Tähän 
+	lisätään GET-pyynnöllä saatu data.json kohteessa oleva tieto. Kun uusi muistiinpano
+	lisätään, tähän listaan päivitetään uusi muistiinpano(listan viimeiseksi). Tämän jälkeen
+	kutsutaan redrawNotes-funktiota, joka piirtää muistiinpanot näytölle, mukana uusi 
+	muistiinpano. Vasta tämän jälkeen selain lähettää viestin tiedot palvelimelle.
+
+
+	selain->palvelin POST https://studies.cs.helsinki.fi/exampleapp/new_note_spa
+
+
+	Selain lähettää POST-pyynnön palvelimmelle, jonka mukana lähtee kenttään syötetty
+	viesti sekä aikaleima. 
+
+	Consoleen printataan: {"message":"note created"}
