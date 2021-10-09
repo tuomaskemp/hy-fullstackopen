@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react'
-import axios from 'axios'
 import Filter from './components/Filter'
 import ContactForm from './components/ContactForm'
 import ListDisplay from './components/ListDisplay'
+import Notification from './components/Notification'
+import contactService from './services/contacts'
 
 const App = () => {
   const [ persons, setPersons] = useState([]) 
@@ -10,14 +11,15 @@ const App = () => {
   const [ newNameFilter, setNewNameFilter ] = useState('')
   const [ newNumber, setNewNumber ] = useState(0)
   const [ personsToDisplay, setPersonsToDisplay ] = useState([])
+  const [ message, setMessage ] = useState({})
   
   useEffect(() => {
-    axios
-    .get('http://localhost:3001/persons')
-    .then(response => {
-      setPersons([...response.data])
-      setPersonsToDisplay([...response.data])
-    })
+    contactService
+      .getAll()
+      .then(fetchedContacts => {
+        setPersons(fetchedContacts)
+        setPersonsToDisplay(fetchedContacts)
+        })
   }, [])
 
   const nameChange = (e) => {
@@ -30,20 +32,59 @@ const App = () => {
   }
 
   const setPersonsAndDisplay = (data) => {
-    setPersonsToDisplay(data)
-    setPersons(data)
+    contactService
+      .create(data)
+      .then(response => {
+        setPersons(persons.concat(response))
+        setPersonsToDisplay(persons.concat(response))
+      })
   }
+
+  const updateContact = (contact) => {
+    if (window.confirm(`${contact.name} is already added to phonebook, replace the old number with a new one?`)) {
+      const updatedContact = { ...contact, number: newNumber }
+      contactService
+        .update(contact.id, updatedContact)
+        .then(
+          response => {
+            let newPersons = persons.map(person => person.id !== contact.id ? person : response)
+            setPersons(newPersons)
+            setPersonsToDisplay(newPersons)
+            setNewNumber(0)
+            setMessage({body:"Contact updated successfully", type:''})
+            setTimeout(() => {
+              setMessage({})
+            }, 3000)
+          }
+        )
+        .catch(
+          err => {
+            setMessage({body:`Information of ${contact.name} has already been removed from server`, type:'error'})
+            setTimeout(() => {
+              setMessage({})
+            }, 3000)
+          }
+        )
+    }
+  }
+
   const addName = (e) => {
     e.preventDefault()
     const name = {
       name: newName,
       number: newNumber
     }
-    persons.find(
-      person => person.name === name.name) 
-      ? alert(`${name.name} is already added to phonebook`) 
-      : setPersonsAndDisplay(persons.concat(name))
+    const contactExists = persons.find(
+    person => person.name === name.name)
+
+    contactExists ? updateContact(contactExists)
+    : setPersonsAndDisplay(name)
     setNewName('')
+    setMessage({body:"Contact added successfully", type:''})
+    setTimeout(() => {
+      setMessage({})
+    }, 3000)
+    
   }
   const setContactsToDisplay = (e) => {
     e.preventDefault()
@@ -58,11 +99,27 @@ const App = () => {
     )
     setPersonsToDisplay(personsToDisplay)
   }
+  const handleDelete = (person) => () => {
+    const updatedPersonsList = persons.filter(p => p.id !== person.id)
+    if (window.confirm(`Delete ${person.name}?`)) {
+        contactService
+            .del(person.id)
+            .then(res => {
+              setPersons(updatedPersonsList)
+              setPersonsToDisplay(updatedPersonsList)
+              setMessage({body:"Contact deleted successfully", type:''})
+              setTimeout(() => {
+                setMessage({})
+              }, 3000)
+              })
+    }
+    
+}
 
-  return (
+  return ( // error #d9534f success #5cb85c
     <div>
       <h2>Phonebook</h2>
-      
+      <Notification msg={message.body} type={message.type} />
       <Filter 
         submitHandler={filterResults} 
         filterValue={newNameFilter} 
@@ -77,7 +134,10 @@ const App = () => {
         numberChangeHandler={numberChange}
       />
       <h2>Numbers</h2>
-      <ListDisplay list={personsToDisplay} />
+      <ListDisplay 
+        list={personsToDisplay} 
+        handleDelete={handleDelete}
+      />
     </div>
   )
 

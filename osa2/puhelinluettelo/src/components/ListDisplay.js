@@ -1,10 +1,13 @@
 import React from 'react'
 
-const ListDisplay = ({list}) => {
+const ListDisplay = ({list, handleDelete}) => {
     return (
         <div>
             {list.map(person => 
-                <p key={person.name}>{person.name} {person.number}</p>
+                <p key={person.name}>
+                    {person.name} {person.number}
+                    <button onClick={handleDelete(person)}>delete</button>
+                </p>
                 )
             }
         </div>
