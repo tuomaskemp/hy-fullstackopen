@@ -37,6 +37,17 @@ const App = () => {
       .then(response => {
         setPersons(persons.concat(response))
         setPersonsToDisplay(persons.concat(response))
+        setNewName('')
+        setMessage({body:"Contact added successfully", type:''})
+        setTimeout(() => {
+          setMessage({})
+        }, 3000)
+      })
+      .catch(error => {
+        setMessage({body:error.response.data.error, type:'error'})
+        setTimeout(() => {
+          setMessage({})
+        }, 3000)
       })
   }
 
@@ -79,13 +90,7 @@ const App = () => {
 
     contactExists ? updateContact(contactExists)
     : setPersonsAndDisplay(name)
-    setNewName('')
-    setMessage({body:"Contact added successfully", type:''})
-    setTimeout(() => {
-      setMessage({})
-    }, 3000)
-    
-  }
+    }
   const setContactsToDisplay = (e) => {
     e.preventDefault()
     setNewNameFilter(e.target.value)
