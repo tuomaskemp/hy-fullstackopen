@@ -88,7 +88,7 @@ describe('total likes', () => {
     })
 })
 
-describe('favourite blog', () => {
+describe('favorite blog', () => {
     test('in the list is returned', () => {
         const result = listHelper.favoriteBlog(bigListOfBlogs)
         expect(result).toEqual(
@@ -111,6 +111,18 @@ describe('author with most blogs', () => {
             {
                 author: 'Robert C. Martin',
                 blogs: 3
+            }
+        )
+    })
+})
+
+describe('author with most likes', () => {
+    test('is returned from the list', () => {
+        const result = listHelper.mostLikes(bigListOfBlogs)
+        expect(result).toEqual(
+            {
+                author: 'Edsger W. Dijkstra',
+                likes: 17
             }
         )
     })
