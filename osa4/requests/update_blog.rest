@@ -1,0 +1,9 @@
+PUT http://127.0.0.1:3003/api/blogs/6177a8e7624cf4736f4a819f
+Content-Type: application/json
+
+{
+    "title": "vika blogi",
+    "author": "Tuomas",
+    "url": "www.example.com",
+    "likes": 245
+}
