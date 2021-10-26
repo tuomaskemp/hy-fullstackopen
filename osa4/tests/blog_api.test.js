@@ -24,8 +24,31 @@ describe('api', () => {
     })
     test('response blog identifier field name is id', async () => {
         const response = await api.get('/api/blogs')
-        console.log(response.body[0])
         expect(response.body[0].id).toBeDefined()
+    })
+    test('can post a new blog', async () => {
+        await api
+            .post('/api/blogs')
+            .send(helper.singleBlog)
+
+        const currentBlogs = await helper.blogsInDb()
+        expect(currentBlogs).toHaveLength(helper.initialBlogs.length + 1)
+        const contents = currentBlogs.map(res => res.title)
+        expect(contents).toContain('example blog')
+    })
+    test('a new blog has 0 likes if likes were not provided', async () => {
+        const res = await api.post('/api/blogs').send(helper.singleBlogWithoutLikes)
+        expect(res.body.likes).toBe(0)
+    })
+    test('blog without title and url is not added', async () => {
+        await api
+            .post('/api/blogs')
+            .send(helper.singleBlogWithoutTitleAndUrl)
+            .expect(400)
+
+        const currentBlogs = await helper.blogsInDb()
+        expect(currentBlogs).toHaveLength(helper.initialBlogs.length)
+
     })
 })
 

@@ -2,8 +2,6 @@ POST http://127.0.0.1:3003/api/blogs
 Content-Type: application/json
 
 {
-    "title": "toka blogi",
     "author": "Tuomas",
-    "url": "www.example.com",
     "likes": 245
 }
