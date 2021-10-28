@@ -81,11 +81,30 @@ const testUpdateBlog = {
     likes: 245
 }
 
+const initialUsers = {
+    username: 'Eka',
+    fullname: 'Eka user'
+}
+
+const testUser = {
+    username: 'Test3',
+    password: 'secret',
+    fullname: 'test2 user'
+}
+
+const invalidUser = {
+    username: 'Test58',
+    fullname: 'test2 user'
+}
+
 module.exports = {
     initialBlogs,
     singleBlog,
     singleBlogWithoutLikes,
     singleBlogWithoutTitleAndUrl,
     blogsInDb,
-    testUpdateBlog
+    testUpdateBlog,
+    initialUsers,
+    testUser,
+    invalidUser
 }

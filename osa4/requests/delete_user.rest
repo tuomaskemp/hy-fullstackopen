@@ -1,0 +1,1 @@
+DELETE http://127.0.0.1:3003/api/users/6179013ccd500cf42f892bd0
