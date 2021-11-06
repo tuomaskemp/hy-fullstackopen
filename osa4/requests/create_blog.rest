@@ -1,10 +1,10 @@
 POST http://127.0.0.1:3003/api/blogs
 Content-Type: application/json
-Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IlRlc3R1c2VyMTIzNDU2Nzg5IiwiaWQiOiI2MTc5YWNjZWViNGY0YWQyNzNjYWM3MDkiLCJpYXQiOjE2MzUzNjQxMDIsImV4cCI6MTYzNTM2NzcwMn0.NB_FhN7eiYhuD22WP1Ol1SUUmj_UA0zbWlvpUKpaTno
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InVzZXIyIiwiaWQiOiI2MTg2ZjZjY2UyYTY5MDAyMzJiNjIyOTAiLCJpYXQiOjE2MzYyMzQ5NjgsImV4cCI6MTYzNjIzODU2OH0.YS3WdpaJCzmnFupYncUp7_c93wuIYvEw7AUqTb_IGeQ
 
 {
-    "title": "new blog",
-    "author": "John34567",
+    "title": "new blog3",
+    "author": "John Doe2",
     "url": "www.example.com",
-    "likes": 245
+    "likes": 20
 }
