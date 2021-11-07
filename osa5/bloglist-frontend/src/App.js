@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import Blog from './components/Blog'
 import blogService from './services/blogs'
 import loginService from './services/loginService'
@@ -6,14 +6,16 @@ import LoginForm from './components/forms/loginForm'
 import NewBlogForm from './components/forms/newBlogForm'
 import Button from './components/Button'
 import Notification from './components/Notification'
+import Togglable from './components/Togglable'
 
 const App = () => {
   const [blogs, setBlogs] = useState([])
   const [username, setUsername] = useState('') 
   const [password, setPassword] = useState('')
   const [user, setUser] = useState(null)
-  const [newBlog, setNewBlog] = useState({ title: '', author: '', url: ''})
   const [notification, setNotification] = useState({ type: '', message: ''})
+
+  const blogFormRef = useRef()
 
   useEffect(() => {
     blogService.getAll().then(blogs =>
@@ -56,16 +58,38 @@ const App = () => {
     setNotification({ type: '', message: 'Logout successful'})
   }
 
-  const handleNewBlogSubmit = (e) => {
-    e.preventDefault()
-    blogService.create(newBlog)
+  const handleNewBlogSubmit = (newBlog) => {
+    blogService
+    .create(newBlog)
     .then(addedBlog => {
       setNotification({ type: '', message: `a new blog ${newBlog.title} added`})
       setBlogs(blogs.concat(addedBlog))
-      setNewBlog({ title: '', author: '', url: ''})
+      blogFormRef.current.toggleVisibility()
     })
     .catch (exception => 
     setNotification({ type: 'error', message: `cannot add a new blog. Reason: ${exception}`}))
+  }
+
+  const handleBlogLikeClick = (likedBlog) => {
+    blogService
+      .update(likedBlog.id, likedBlog)
+      .then(updatedBlog => {
+        setBlogs(blogs.map(blog => blog.id !== likedBlog.id ? blog : updatedBlog))
+        setNotification({ type: '', message: `blog updated successfully`})
+      })
+      .catch(() => setNotification({ type: 'error', message: 'blog update failed'}))
+  }
+
+  const handleRemovedBlogClick = removedBlog => {
+    if (window.confirm(`Remove ${removedBlog.title}?`)) {
+      blogService
+        .del(removedBlog.id)
+        .then(() => {
+          setBlogs(blogs.filter(blog => blog.id !== removedBlog.id))
+          setNotification({ type: '', message: `${removedBlog.title} removed`})
+        })
+        .catch(() => setNotification({ type: 'error', message: 'blog remove failed'}))
+    }
   }
 
   if (user === null) {
@@ -91,17 +115,18 @@ const App = () => {
       <p>{user.username} logged in</p>
       <Button clickAction={handleLogout} text={"logout"} />
       <h2>create new</h2>
-      <NewBlogForm 
-        newBlogSubmitHandler={handleNewBlogSubmit}
-        title={newBlog.title}
-        author={newBlog.author}
-        url={newBlog.url}
-        titleOnChange={({ target }) => setNewBlog(oldState => ({...oldState, title: target.value}))}
-        authorOnChange={({ target }) => setNewBlog(oldState => ({...oldState, author: target.value}))}
-        urlOnChange={({ target }) => setNewBlog(oldState => ({...oldState, url: target.value}))}
-      />
-      {blogs.map(blog =>
-        <Blog key={blog.id} blog={blog} />
+      <Togglable buttonLabel="create new blog" ref={blogFormRef}>
+        <NewBlogForm createBlog={handleNewBlogSubmit}/>
+      </Togglable>
+      {blogs
+        .sort((a, b) => a.likes < b.likes ? 1 : -1)
+        .map(blog =>
+        <Blog 
+          key={blog.id} blog={blog} 
+          likedBlog={handleBlogLikeClick} 
+          removedBlog={handleRemovedBlogClick} 
+          userName={user.username}
+        />
       )}
     </div>
   )
