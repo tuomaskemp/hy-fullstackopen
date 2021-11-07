@@ -1,9 +1,9 @@
 import React from 'react'
 
-const Button = ({clickAction, text}) => (
+const Button = ({ clickAction, text }) => (
   <div>
     <button onClick={clickAction}>{text}</button>
-  </div>  
+  </div>
 )
 
 export default Button

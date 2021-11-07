@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import Button from './Button'
 
-const Blog = ({blog, likedBlog, removedBlog, userName}) => {
+const Blog = ({ blog, likedBlog, removedBlog, userName }) => {
   const [display, setDisplay] = useState(false)
 
   const toggleVisibility = () => {
@@ -36,9 +36,9 @@ const Blog = ({blog, likedBlog, removedBlog, userName}) => {
 
   if (!display) {
     return (
-    <div style={blogStyle}>
+      <div style={blogStyle}>
         {blog.title} <Button text="view" clickAction={toggleVisibility} />
-    </div>
+      </div>
     )
   }
 
@@ -51,11 +51,11 @@ const Blog = ({blog, likedBlog, removedBlog, userName}) => {
       <p>likes {blog.likes}</p>
       <Button text="like" clickAction={handleLikeClick} />
       {
-        blog.user.username === userName ? 
-        <Button text="remove blog" clickAction={handleRemoveClick} /> :
-        <p>You have no permission to remove this blog.</p>
+        blog.user.username === userName ?
+          <Button text="remove blog" clickAction={handleRemoveClick} /> :
+          <p>You have no permission to remove this blog.</p>
       }
-      
+
     </div>
   )
 }

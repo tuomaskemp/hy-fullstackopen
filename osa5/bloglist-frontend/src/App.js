@@ -10,17 +10,17 @@ import Togglable from './components/Togglable'
 
 const App = () => {
   const [blogs, setBlogs] = useState([])
-  const [username, setUsername] = useState('') 
+  const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [user, setUser] = useState(null)
-  const [notification, setNotification] = useState({ type: '', message: ''})
+  const [notification, setNotification] = useState({ type: '', message: '' })
 
   const blogFormRef = useRef()
 
   useEffect(() => {
     blogService.getAll().then(blogs =>
       setBlogs(blogs)
-    )  
+    )
   }, [])
 
   useEffect(() => {
@@ -45,9 +45,9 @@ const App = () => {
       setUser(user)
       setUsername('')
       setPassword('')
-      setNotification({ type: '', message: 'Login successful'})
-    } catch {
-      setNotification({ type: 'error', message: 'Login failed'})
+      setNotification({ type: '', message: 'Login successful' })
+    } catch (e) {
+      setNotification({ type: 'error', message: 'Login failed' })
     }
   }
 
@@ -55,19 +55,19 @@ const App = () => {
     e.preventDefault()
     window.localStorage.removeItem('loggedInBlogAppUser')
     setUser(null)
-    setNotification({ type: '', message: 'Logout successful'})
+    setNotification({ type: '', message: 'Logout successful' })
   }
 
   const handleNewBlogSubmit = (newBlog) => {
     blogService
-    .create(newBlog)
-    .then(addedBlog => {
-      setNotification({ type: '', message: `a new blog ${newBlog.title} added`})
-      setBlogs(blogs.concat(addedBlog))
-      blogFormRef.current.toggleVisibility()
-    })
-    .catch (exception => 
-    setNotification({ type: 'error', message: `cannot add a new blog. Reason: ${exception}`}))
+      .create(newBlog)
+      .then(addedBlog => {
+        setNotification({ type: '', message: `a new blog ${newBlog.title} added` })
+        setBlogs(blogs.concat(addedBlog))
+        blogFormRef.current.toggleVisibility()
+      })
+      .catch (exception =>
+        setNotification({ type: 'error', message: `cannot add a new blog. Reason: ${exception}` }))
   }
 
   const handleBlogLikeClick = (likedBlog) => {
@@ -75,9 +75,9 @@ const App = () => {
       .update(likedBlog.id, likedBlog)
       .then(updatedBlog => {
         setBlogs(blogs.map(blog => blog.id !== likedBlog.id ? blog : updatedBlog))
-        setNotification({ type: '', message: `blog updated successfully`})
+        setNotification({ type: '', message: 'blog updated successfully' })
       })
-      .catch(() => setNotification({ type: 'error', message: 'blog update failed'}))
+      .catch(() => setNotification({ type: 'error', message: 'blog update failed' }))
   }
 
   const handleRemovedBlogClick = removedBlog => {
@@ -86,9 +86,9 @@ const App = () => {
         .del(removedBlog.id)
         .then(() => {
           setBlogs(blogs.filter(blog => blog.id !== removedBlog.id))
-          setNotification({ type: '', message: `${removedBlog.title} removed`})
+          setNotification({ type: '', message: `${removedBlog.title} removed` })
         })
-        .catch(() => setNotification({ type: 'error', message: 'blog remove failed'}))
+        .catch(() => setNotification({ type: 'error', message: 'blog remove failed' }))
     }
   }
 
@@ -97,13 +97,13 @@ const App = () => {
       <div>
         <Notification type={notification.type} message={notification.message} />
         <h2>Log in to application</h2>
-        <LoginForm 
+        <LoginForm
           loginHandler={handleLogin}
           username={username}
           password={password}
           usernameOnChange={({ target }) => setUsername(target.value)}
           passwordOnChange={({ target }) => setPassword(target.value)}
-          />
+        />
       </div>
     )
   }
@@ -113,21 +113,21 @@ const App = () => {
       <Notification type={notification.type} message={notification.message}/>
       <h2>blogs</h2>
       <p>{user.username} logged in</p>
-      <Button clickAction={handleLogout} text={"logout"} />
+      <Button clickAction={handleLogout} text={'logout'} />
       <h2>create new</h2>
       <Togglable buttonLabel="create new blog" ref={blogFormRef}>
-        <NewBlogForm createBlog={handleNewBlogSubmit}/>
+        <NewBlogForm createBlog={handleNewBlogSubmit} />
       </Togglable>
       {blogs
         .sort((a, b) => a.likes < b.likes ? 1 : -1)
         .map(blog =>
-        <Blog 
-          key={blog.id} blog={blog} 
-          likedBlog={handleBlogLikeClick} 
-          removedBlog={handleRemovedBlogClick} 
-          userName={user.username}
-        />
-      )}
+          <Blog
+            key={blog.id} blog={blog}
+            likedBlog={handleBlogLikeClick}
+            removedBlog={handleRemovedBlogClick}
+            userName={user.username}
+          />
+        )}
     </div>
   )
 }
