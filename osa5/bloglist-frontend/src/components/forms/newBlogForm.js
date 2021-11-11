@@ -14,37 +14,55 @@ const NewBlogForm = ({ createBlog }) => {
     setNewBlog({ title: '', author: '', url: '' })
   }
 
+  const handleTitleChange = (event) => {
+    const value = event.target.value
+    setNewBlog(oldState => ({ ...oldState, title: value }))
+  }
+  const handleAuthorChange = (event) => {
+    const value = event.target.value
+    setNewBlog(oldState => ({ ...oldState, author: value }))
+  }
+  const handleUrlChange = (event) => {
+    const value = event.target.value
+    setNewBlog(oldState => ({ ...oldState, url: value }))
+  }
   return (
     <div>
       <form onSubmit={addNewBlog}>
         <div>
             title:
           <input
+            id="title"
             type="text"
             value={newBlog.title}
             name="Title"
-            onChange={({ target }) => setNewBlog(oldState => ({ ...oldState, title: target.value }))}
+            placeholder="title"
+            onChange={handleTitleChange}
           />
         </div>
         <div>
             author:
           <input
+            id="author"
             type="text"
             value={newBlog.author}
             name="Author"
-            onChange={({ target }) => setNewBlog(oldState => ({ ...oldState, author: target.value }))}
+            placeholder="author"
+            onChange={handleAuthorChange}
           />
         </div>
         <div>
             url:
           <input
+            id="url"
             type="text"
             value={newBlog.url}
             name="Url"
-            onChange={({ target }) => setNewBlog(oldState => ({ ...oldState, url: target.value }))}
+            placeholder="url"
+            onChange={handleUrlChange}
           />
         </div>
-        <button type="submit">create</button>
+        <button type="submit" id="submit">create</button>
       </form>
     </div>
   )

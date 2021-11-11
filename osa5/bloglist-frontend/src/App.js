@@ -125,7 +125,7 @@ const App = () => {
             key={blog.id} blog={blog}
             likedBlog={handleBlogLikeClick}
             removedBlog={handleRemovedBlogClick}
-            userName={user.username}
+            user={user}
           />
         )}
     </div>
