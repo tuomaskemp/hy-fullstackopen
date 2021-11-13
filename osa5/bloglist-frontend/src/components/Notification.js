@@ -37,7 +37,7 @@ const Notification = ({ type, message }) => {
   }
 
   return (
-    <div style={notificationStyle}>
+    <div style={notificationStyle} className="notification-banner">
       {message}
     </div>
   )
