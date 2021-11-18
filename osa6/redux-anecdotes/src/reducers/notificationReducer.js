@@ -9,18 +9,21 @@ const reducer = (state = initialState, action) => {
     }
 }
 
-export const showNotification = (msg) => {
-    return {
-        type: 'CHANGE_MESSAGE',
-        data: { message: msg }
+export const showNotification = (msg, timeInSeconds) => {
+    return async dispatch =>  {
+        dispatch({
+            type: 'CHANGE_MESSAGE',
+            data: { message: msg }
+        })
+        setTimeout(() => {
+            dispatch({
+                type: 'CHANGE_MESSAGE',
+                data: { message: '' }
+            })
+        }, timeInSeconds * 1000)
     }
-}
-
-export const hideNotification = () => {
-    return {
-        type: 'CHANGE_MESSAGE',
-        data: { message: '' }
-    }
+    
+    
 }
 
 export default reducer
