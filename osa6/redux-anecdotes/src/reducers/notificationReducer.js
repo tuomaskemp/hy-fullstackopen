@@ -9,18 +9,26 @@ const reducer = (state = initialState, action) => {
     }
 }
 
+let timeoutID = undefined
+
 export const showNotification = (msg, timeInSeconds) => {
     return async dispatch =>  {
         dispatch({
             type: 'CHANGE_MESSAGE',
             data: { message: msg }
         })
-        setTimeout(() => {
+
+        if (typeof timeoutID === 'number') {
+            clearTimeout(timeoutID)
+        }
+        
+        timeoutID = setTimeout(() => {
             dispatch({
                 type: 'CHANGE_MESSAGE',
                 data: { message: '' }
             })
         }, timeInSeconds * 1000)
+        
     }
     
     
