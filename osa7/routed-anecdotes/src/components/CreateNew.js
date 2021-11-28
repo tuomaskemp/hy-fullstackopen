@@ -1,23 +1,34 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { useHistory } from 'react-router'
+import { useField } from '../hooks/index'
 
 const CreateNew = (props) => {
-    const [content, setContent] = useState('')
-    const [author, setAuthor] = useState('')
-    const [info, setInfo] = useState('')
-
+    const content = useField('text')
+    const author = useField('text')
+    const info = useField('text')
+    
+    const fields = [content, author, info].map(({clear, ...rest}) => rest)
+    
     const history = useHistory()
   
     const handleSubmit = (e) => {
       e.preventDefault()
       props.addNew({
-        content,
-        author,
-        info,
+        content: content.value,
+        author: author.value,
+        info: info.value,
         votes: 0
       })
       history.push('/')
     }
+
+    const resetForm = (e) => {
+      e.preventDefault()
+      content.clear()
+      author.clear()
+      info.clear()
+    }
+      
   
     return (
       <div>
@@ -25,17 +36,18 @@ const CreateNew = (props) => {
         <form onSubmit={handleSubmit}>
           <div>
             content
-            <input name='content' value={content} onChange={(e) => setContent(e.target.value)} />
+            <input {...fields[0]} />
           </div>
           <div>
             author
-            <input name='author' value={author} onChange={(e) => setAuthor(e.target.value)} />
+            <input {...fields[1]} />
           </div>
           <div>
             url for more info
-            <input name='info' value={info} onChange={(e)=> setInfo(e.target.value)} />
+            <input {...fields[2]} />
           </div>
           <button>create</button>
+          <button onClick={resetForm}>reset</button>
         </form>
       </div>
     )
