@@ -1,25 +1,13 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
+import { useSelector } from 'react-redux'
 
-const Notification = ({ type, message }) => {
-  const [display, setDisplay] = useState(false)
+const Notification = () => {
+  const notification = useSelector(state => state.notification)
 
-  useEffect(() => {
-    if (!message) {
-      setDisplay(false)
-      return
-    }
-    setDisplay(true)
-    const timeOut = setTimeout(() => {
-      setDisplay(false)
-    }, 3000)
-    return () => {
-      clearTimeout(timeOut)
-    }
-  }, [message])
-
-  if (!display || !message) {
+  if (!notification.message) {
     return null
   }
+
   const notificationStyle = {
     backgroundColor: '#5cb85c',
     width: '300px',
@@ -32,13 +20,13 @@ const Notification = ({ type, message }) => {
     marginTop: '20px',
     marginRight: '20px'
   }
-  if (type === 'error') {
+  if (notification.type === 'error') {
     notificationStyle.backgroundColor = '#d9534f'
   }
 
   return (
     <div style={notificationStyle} className="notification-banner">
-      {message}
+      {notification.message}
     </div>
   )
 }

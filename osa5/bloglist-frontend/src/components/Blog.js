@@ -1,31 +1,38 @@
 import React, { useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { likeBlog, removeBlog } from '../reducers/blogReducer'
+import { showNotification } from '../reducers/notificationReducer'
 import Button from './Button'
 
-const Blog = ({ blog, likedBlog, removedBlog, user }) => {
+const Blog = ({ blog }) => {
   const [display, setDisplay] = useState(false)
+  const dispatch = useDispatch()
+  const user = useSelector(state => state.user)
 
   const toggleVisibility = () => {
     setDisplay(!display)
   }
 
-  const handleLikeClick = () => {
-    likedBlog({
-      title: blog.title,
-      author: blog.author,
-      url: blog.url,
-      likes: blog.likes + 1,
-      id: blog.id,
-    })
+  const handleRemoveClick = () => {
+    if (window.confirm(`Remove ${blog.title}?`)) {
+      dispatch(removeBlog(blog))
+        .then(() => {
+          dispatch(showNotification(`${blog.title} removed`, '', 5))
+        })
+        .catch(() => dispatch(showNotification('blog remove failed', 'error', 5)))
+    }
   }
 
-  const handleRemoveClick = () => {
-    removedBlog({
+  const handleLikeClick = () => {
+    dispatch(likeBlog({
       title: blog.title,
       author: blog.author,
       url: blog.url,
       likes: blog.likes + 1,
       id: blog.id,
-    })
+    }))
+      .then(() => dispatch(showNotification('blog updated successfully', '', 5)))
+      .catch(() => dispatch(showNotification('blog update failed', 'error', 5)))
   }
 
   const blogStyle = {

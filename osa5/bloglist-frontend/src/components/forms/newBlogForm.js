@@ -1,17 +1,25 @@
-import React, { useState } from 'react'
-import PropTypes from 'prop-types'
+import React, { useRef, useState } from 'react'
+import { useDispatch } from 'react-redux'
+import { createBlog } from '../../reducers/blogReducer'
+import { showNotification } from '../../reducers/notificationReducer'
+import Togglable from '../Togglable'
 
-const NewBlogForm = ({ createBlog }) => {
+const NewBlogForm = () => {
   const [newBlog, setNewBlog] = useState({ title: '', author: '', url: '' })
+  const dispatch = useDispatch()
+  const blogFormRef = useRef()
 
   const addNewBlog = (e) => {
     e.preventDefault()
-    createBlog({
-      title: newBlog.title,
-      author: newBlog.author,
-      url: newBlog.url
-    })
-    setNewBlog({ title: '', author: '', url: '' })
+    dispatch(createBlog(newBlog))
+      .then(() => {
+        dispatch(showNotification(`a new blog ${newBlog.title} added`, '', 5))
+        setNewBlog({ title: '', author: '', url: '' })
+        blogFormRef.current.toggleVisibility()
+      })
+      .catch (exception =>
+        dispatch(showNotification(`cannot add a new blog. Reason: ${exception}`, 'error', 5))
+      )
   }
 
   const handleTitleChange = (event) => {
@@ -28,48 +36,46 @@ const NewBlogForm = ({ createBlog }) => {
   }
   return (
     <div>
-      <form onSubmit={addNewBlog}>
-        <div>
+      <Togglable buttonLabel="create new blog" ref={blogFormRef}>
+        <form onSubmit={addNewBlog}>
+          <div>
             title:
-          <input
-            id="title"
-            type="text"
-            value={newBlog.title}
-            name="Title"
-            placeholder="title"
-            onChange={handleTitleChange}
-          />
-        </div>
-        <div>
+            <input
+              id="title"
+              type="text"
+              value={newBlog.title}
+              name="Title"
+              placeholder="title"
+              onChange={handleTitleChange}
+            />
+          </div>
+          <div>
             author:
-          <input
-            id="author"
-            type="text"
-            value={newBlog.author}
-            name="Author"
-            placeholder="author"
-            onChange={handleAuthorChange}
-          />
-        </div>
-        <div>
+            <input
+              id="author"
+              type="text"
+              value={newBlog.author}
+              name="Author"
+              placeholder="author"
+              onChange={handleAuthorChange}
+            />
+          </div>
+          <div>
             url:
-          <input
-            id="url"
-            type="text"
-            value={newBlog.url}
-            name="Url"
-            placeholder="url"
-            onChange={handleUrlChange}
-          />
-        </div>
-        <button type="submit" id="submit">create</button>
-      </form>
+            <input
+              id="url"
+              type="text"
+              value={newBlog.url}
+              name="Url"
+              placeholder="url"
+              onChange={handleUrlChange}
+            />
+          </div>
+          <button type="submit" id="submit">create</button>
+        </form>
+      </Togglable>
     </div>
   )
-}
-
-NewBlogForm.propTypes = {
-  createBlog: PropTypes.func.isRequired
 }
 
 export default NewBlogForm
