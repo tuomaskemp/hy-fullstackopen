@@ -12,6 +12,8 @@ const reducer = (state = intialState, action) => {
     return state.map(blog => blog.id !== action.data.id ? blog : action.data)
   case 'DELETE_BLOG':
     return state.filter(blog => blog.id !== action.data.id)
+  case 'CLEAR_STATE':
+    return intialState
   default:
     return state
   }
@@ -53,6 +55,14 @@ export const removeBlog = (data) => {
     dispatch({
       type: 'DELETE_BLOG',
       data: data
+    })
+  }
+}
+
+export const clearBlogState = () => {
+  return async dispatch => {
+    dispatch({
+      type: 'CLEAR_STATE'
     })
   }
 }

@@ -1,41 +1,39 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import BlogList from './components/BlogList'
-import LoginForm from './components/forms/loginForm'
-import NewBlogForm from './components/forms/newBlogForm'
-import Logout from './components/Logout'
+import { Routes, Route } from 'react-router-dom'
 import Notification from './components/Notification'
-import { initBlogs } from './reducers/blogReducer'
 import { initUser } from './reducers/userReducer'
+import { usersList } from './reducers/userReducer'
+import Blogs from './views/blogs'
+import Users from './views/users'
+import User from './views/user'
+import Blog from './views/blog'
+import NavBar from './components/NavBar'
 
 const App = () => {
-  const user = useSelector(state => state.user)
   const dispatch = useDispatch()
+  const user = useSelector(state => state.user)
 
   useEffect(() => {
     dispatch(initUser())
-    dispatch(initBlogs())
+    dispatch(usersList())
   }, [dispatch])
 
-  if (user === null) {
-    return (
-      <div>
-        <Notification />
-        <h2>Log in to application</h2>
-        <LoginForm />
-      </div>
-    )
-  }
+
 
   return (
     <div>
+      <NavBar />
       <Notification />
-      <h2>blogs</h2>
-      <p>{user.username} logged in</p>
-      <Logout />
-      <h2>create new</h2>
-      <NewBlogForm />
-      <BlogList />
+      <h2>blog app</h2>
+      {user.logged_in ?
+        <Routes>
+          <Route path="/users/:id" element={<User />} />
+          <Route exact path="users" element={<Users />}></Route>
+          <Route path="/blogs/:id" element={<Blog />} />
+          <Route exact path="/" element={<Blogs />}></Route>
+        </Routes>
+        : null}
     </div>
   )
 }
