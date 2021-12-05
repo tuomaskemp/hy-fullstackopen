@@ -2,7 +2,7 @@ import React from 'react'
 import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { logout } from '../reducers/userReducer'
-import Button from './Button'
+import { Button } from 'semantic-ui-react'
 
 
 const Logout = () => {
@@ -16,7 +16,7 @@ const Logout = () => {
 
   return (
     <div>
-      <Button clickAction={handleLogout} text={'logout'} />
+      <Button onClick={handleLogout} content={'logout'} />
     </div>
   )
 }

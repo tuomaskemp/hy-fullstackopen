@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { usersList } from '../reducers/userReducer'
+import { Grid, Header } from 'semantic-ui-react'
 
 const UserList = () => {
   const users = useSelector(state => state.user.users)
@@ -12,22 +13,20 @@ const UserList = () => {
     dispatch(usersList())
   }, [dispatch])
 
-  const style = {
-    width: '20%',
-    position: 'relative',
-    float: 'left'
-  }
   return (
-    <div>
-      <div style={style}>
-        <h4>username</h4>
-        {users.map(user => <p key={user.id}><Link to={`/users/${user.id}`}>{user.fullname}</Link></p>)}
-      </div>
-      <div style={style}>
-        <h4>blogs created</h4>
-        {users.map(user => <p key={user.id}>{user.blogs.length}</p>)}
-      </div>
-    </div>
+    <Grid>
+      <Grid.Row columns={2}>
+        <Grid.Column>
+          <Header>username</Header>
+          {users.map(user => <p key={user.id}><Link to={`/users/${user.id}`}>{user.fullname}</Link></p>)}
+        </Grid.Column>
+
+        <Grid.Column>
+          <Header>blogs created</Header>
+          {users.map(user => <p key={user.id}>{user.blogs.length}</p>)}
+        </Grid.Column>
+      </Grid.Row>
+    </Grid>
   )
 }
 

@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux'
 import { createBlog } from '../../reducers/blogReducer'
 import { showNotification } from '../../reducers/notificationReducer'
 import Togglable from '../Togglable'
+import { Button, Input, Form } from 'semantic-ui-react'
 
 const NewBlogForm = () => {
   const [newBlog, setNewBlog] = useState({ title: '', author: '', url: '' })
@@ -37,10 +38,10 @@ const NewBlogForm = () => {
   return (
     <div>
       <Togglable buttonLabel="create new blog" ref={blogFormRef}>
-        <form onSubmit={addNewBlog}>
-          <div>
-            title:
-            <input
+        <Form onSubmit={addNewBlog}>
+          <Form.Field>
+            <label>Title</label>
+            <Input
               id="title"
               type="text"
               value={newBlog.title}
@@ -48,10 +49,10 @@ const NewBlogForm = () => {
               placeholder="title"
               onChange={handleTitleChange}
             />
-          </div>
-          <div>
-            author:
-            <input
+          </Form.Field>
+          <Form.Field>
+            <label>Author</label>
+            <Input
               id="author"
               type="text"
               value={newBlog.author}
@@ -59,10 +60,10 @@ const NewBlogForm = () => {
               placeholder="author"
               onChange={handleAuthorChange}
             />
-          </div>
-          <div>
-            url:
-            <input
+          </Form.Field>
+          <Form.Field>
+            <label>Url</label>
+            <Input
               id="url"
               type="text"
               value={newBlog.url}
@@ -70,9 +71,9 @@ const NewBlogForm = () => {
               placeholder="url"
               onChange={handleUrlChange}
             />
-          </div>
-          <button type="submit" id="submit">create</button>
-        </form>
+          </Form.Field>
+          <Button primary type="submit" id="submit">create</Button>
+        </Form>
       </Togglable>
     </div>
   )

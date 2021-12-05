@@ -10,6 +10,7 @@ import User from './views/user'
 import Blog from './views/blog'
 import NavBar from './components/NavBar'
 import { initBlogs } from './reducers/blogReducer'
+import { Container, Header, Divider } from 'semantic-ui-react'
 
 const App = () => {
   const dispatch = useDispatch()
@@ -26,15 +27,16 @@ const App = () => {
       <NavBar />
       <Notification />
       {user.logged_in ?
-        <div>
-          <h2>blog app</h2>
+        <Container>
+          <Header size='huge'>Blog app</Header>
+          <Divider />
           <Routes>
             <Route path="/users/:id" element={<User />} />
             <Route exact path="users" element={<Users />}></Route>
             <Route path="/blogs/:id" element={<Blog />} />
             <Route exact path="/" element={<Blogs />}></Route>
           </Routes>
-        </div>
+        </Container>
         : null}
     </div>
   )

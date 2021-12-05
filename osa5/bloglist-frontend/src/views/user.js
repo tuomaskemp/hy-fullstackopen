@@ -1,6 +1,7 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
 import { useParams } from 'react-router'
+import { Header, Segment, List } from 'semantic-ui-react'
 
 const User = () => {
   const userid = useParams()
@@ -13,11 +14,17 @@ const User = () => {
 
   return (
     <div>
-      <h2>{user.fullname}</h2>
-      <h4>added blogs</h4>
-      <ul>
-        {user.blogs.map(blog => <li key={blog.id}>{blog.title}</li>)}
-      </ul>
+      <Header size="huge">{user.fullname}</Header>
+      <Segment raised>
+        <Header size="medium">Added blogs</Header>
+        <List divided relaxed>
+          {user.blogs.map(blog =>
+            <List.Item key={blog.id}>
+              <List.Header>{blog.title}</List.Header>
+            by {blog.author}
+            </List.Item>)}
+        </List>
+      </Segment>
     </div>
   )
 }
