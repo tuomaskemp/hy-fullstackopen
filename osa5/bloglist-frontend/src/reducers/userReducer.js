@@ -1,7 +1,7 @@
 import blogService from '../services/blogs'
 import loginService from '../services/loginService'
 import userService from '../services/userService'
-import { clearBlogState } from './blogReducer'
+//import { clearBlogState } from './blogReducer'
 import { showNotification } from './notificationReducer'
 
 const initialState = {
@@ -72,7 +72,6 @@ export const logout = () => {
     dispatch({
       type: 'CLEAR_STATE'
     })
-    dispatch(clearBlogState())
     dispatch(showNotification('Logout successful', '', 5))
   }
 }

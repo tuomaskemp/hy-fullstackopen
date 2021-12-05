@@ -12,6 +12,10 @@ const reducer = (state = intialState, action) => {
     return state.map(blog => blog.id !== action.data.id ? blog : action.data)
   case 'DELETE_BLOG':
     return state.filter(blog => blog.id !== action.data.id)
+  case 'COMMENT_BLOG':
+    return state.map(
+      blog => blog.id !== action.data.blog ? blog
+        : { ...blog, comments: blog.comments.concat(action.data.comment) })
   case 'CLEAR_STATE':
     return intialState
   default:
@@ -55,6 +59,22 @@ export const removeBlog = (data) => {
     dispatch({
       type: 'DELETE_BLOG',
       data: data
+    })
+  }
+}
+
+export const createComment = data => {
+  return async dispatch => {
+    const comment = await blogService.createComment(data.id, data.content)
+    dispatch({
+      type: 'COMMENT_BLOG',
+      data: {
+        blog: comment.blog,
+        comment: {
+          content: comment.content,
+          id: comment.id
+        }
+      }
     })
   }
 }

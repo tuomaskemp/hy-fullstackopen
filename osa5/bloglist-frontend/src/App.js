@@ -9,6 +9,7 @@ import Users from './views/users'
 import User from './views/user'
 import Blog from './views/blog'
 import NavBar from './components/NavBar'
+import { initBlogs } from './reducers/blogReducer'
 
 const App = () => {
   const dispatch = useDispatch()
@@ -16,23 +17,24 @@ const App = () => {
 
   useEffect(() => {
     dispatch(initUser())
+    dispatch(initBlogs())
     dispatch(usersList())
   }, [dispatch])
-
-
 
   return (
     <div>
       <NavBar />
       <Notification />
-      <h2>blog app</h2>
       {user.logged_in ?
-        <Routes>
-          <Route path="/users/:id" element={<User />} />
-          <Route exact path="users" element={<Users />}></Route>
-          <Route path="/blogs/:id" element={<Blog />} />
-          <Route exact path="/" element={<Blogs />}></Route>
-        </Routes>
+        <div>
+          <h2>blog app</h2>
+          <Routes>
+            <Route path="/users/:id" element={<User />} />
+            <Route exact path="users" element={<Users />}></Route>
+            <Route path="/blogs/:id" element={<Blog />} />
+            <Route exact path="/" element={<Blogs />}></Route>
+          </Routes>
+        </div>
         : null}
     </div>
   )

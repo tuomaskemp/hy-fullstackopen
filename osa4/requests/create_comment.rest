@@ -1,0 +1,7 @@
+POST http://127.0.0.1:3003/api/blogs/61a918e3a27bb4ecdc90d6ab/comments
+Content-Type: application/json
+
+
+{
+    "content": "Nice blog4!"
+}
