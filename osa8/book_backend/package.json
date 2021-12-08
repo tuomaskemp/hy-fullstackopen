@@ -1,0 +1,21 @@
+{
+  "name": "book_backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "cross-env NODE_ENV=production node index.js",
+    "dev": "cross-env NODE_ENV=development node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Tuomas Kemppainen",
+  "license": "ISC",
+  "dependencies": {
+    "apollo-server": "^3.5.0",
+    "graphql": "^15.7.2",
+    "uuid": "^8.3.2"
+  },
+  "devDependencies": {
+    "cross-env": "^7.0.3"
+  }
+}
