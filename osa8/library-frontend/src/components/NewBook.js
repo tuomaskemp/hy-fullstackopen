@@ -5,7 +5,7 @@ import Notification from './Notification'
 
 const NewBook = (props) => {
   const [title, setTitle] = useState('')
-  const [author, setAuthor] = useState('')
+  const [author, setAuthor] = useState({ name: '', born: 0 })
   const [published, setPublished] = useState(0)
   const [genre, setGenre] = useState('')
   const [genres, setGenres] = useState([])
@@ -19,7 +19,7 @@ const NewBook = (props) => {
   }
 
   const [ addBook ] = useMutation(ADD_BOOK, {
-    refetchQueries: [ { query: ALL_BOOKS }, { query: ALL_AUTHORS} ],
+    refetchQueries: [ { query: ALL_BOOKS }, { query: ALL_AUTHORS } ],
     onError: (error) => {
       notification(error.graphQLErrors[0].message)
     }
@@ -32,11 +32,11 @@ const NewBook = (props) => {
 
   const submit = async (event) => {
     event.preventDefault()
-    addBook({ variables: { title, published, author, genres }})
+    addBook({ variables: { title, published, author, genres } })
 
     setTitle('')
     setPublished('')
-    setAuthor('')
+    setAuthor({ name: '', born: 0 })
     setGenres([])
     setGenre('')
   }
@@ -48,7 +48,7 @@ const NewBook = (props) => {
 
   return (
     <div>
-    <Notification msg={error} />
+      <Notification msg={error} />
       <form onSubmit={submit}>
         <div>
           title
@@ -58,10 +58,18 @@ const NewBook = (props) => {
           />
         </div>
         <div>
-          author
+          author name
           <input
-            value={author}
-            onChange={({ target }) => setAuthor(target.value)}
+            value={author.name}
+            onChange={({ target }) => setAuthor({ ...author, name: target.value })}
+          />
+        </div>
+        <div>
+          author born
+          <input
+            value={author.born}
+            type="number"
+            onChange={({ target }) => setAuthor({ ...author, born: parseInt(target.value) })}
           />
         </div>
         <div>
