@@ -1,14 +1,12 @@
 import React, { useState, useEffect } from 'react'
-import { useMutation, useApolloClient } from '@apollo/client'
+import { useMutation } from '@apollo/client'
 import { LOGIN } from '../queries'
 import Notification from './Notification'
 
-const LoginForm = ({ show, setAuthenticated }) => {
+const LoginForm = ({ show, setAuthenticated, client }) => {
   const [ username, setUsername ] = useState('')
   const [ password, setPassword ] = useState('')
   const [ error, setError ] = useState('')
-  const client = useApolloClient()
-
 
   const notification = (message) => {
     setError(message)
@@ -29,6 +27,7 @@ const LoginForm = ({ show, setAuthenticated }) => {
 
   useEffect(() => {
     if (result.data) {
+      console.log(result)
       const token = result.data.login.value
       localStorage.setItem('library_user', token)
       setAuthenticated(true)
@@ -38,7 +37,7 @@ const LoginForm = ({ show, setAuthenticated }) => {
   }, [result.data]) // eslint-disable-line
 
   useEffect(() => {
-    if (tokenInLocalStorage) {
+    if (tokenInLocalStorage()) {
       setAuthenticated(true)
     }
   }, [])
