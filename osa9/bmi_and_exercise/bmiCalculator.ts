@@ -30,12 +30,12 @@ const parseArgs = (args: Array<string>): BodyValues => {
 const isInRange = (min: number, max: number, num: number): boolean => 
     num >= min && num <= max;
 
-const calculateBmi = (weight: number, height: number): number => {
+export const calculateBmi = (weight: number, height: number): number => {
     const bmi = (weight / height / height) * 10000;
     return bmi;
 }
 
-const getBmiCategory = (bmi: number): bmiCategory => {
+export const getBmiCategory = (bmi: number): bmiCategory => {
     if(bmi < 16.0) {
         return 'Underweight (Severe thinness)';
     } else if (isInRange(16.0, 16.9, bmi)) {

@@ -15,7 +15,7 @@ interface exerciseInput {
 
 const parseArg = (args: Array<string>): exerciseInput => {
     if (args.length < 4) throw new Error('Not enough arguments');
-    
+
     const days = args.slice(3);
     const target = args[2];
 
