@@ -5,7 +5,7 @@ interface Result {
     average: number;
     success: boolean;
     rating: number;
-    ratingDescription: String;
+    ratingDescription: string;
 }
 
 interface exerciseInput {
@@ -23,11 +23,11 @@ const parseArg = (args: Array<string>): exerciseInput => {
         return {
             exerciseHours: days.map(Number),
             target: Number(target)
-        } 
+        }; 
     } else {
         throw new Error('Provided values were not numbers!');
     }
-}
+};
 
 const getRating = (target: number, average: number, success: boolean): number => {
     if (success) {
@@ -35,9 +35,9 @@ const getRating = (target: number, average: number, success: boolean): number =>
     } else {
         return (((target - average) / (target + average / 2)) * 100) < 15 ? 2 : 1;
     }
-}
+};
 
-const getRatingDescription = (rating: number): String => {
+const getRatingDescription = (rating: number): string => {
     switch(rating) {
         case 3:
             return "Well done!";
@@ -48,7 +48,7 @@ const getRatingDescription = (rating: number): String => {
         default:
             throw new Error('Invalid rating.');
     }
-}
+};
 
 const calculateExercises = (hoursPerEachDay: Array<number>, target: number): Result => {
     const periodLength = hoursPerEachDay.length;
@@ -66,8 +66,8 @@ const calculateExercises = (hoursPerEachDay: Array<number>, target: number): Res
         success,
         rating,
         ratingDescription
-    }
-}
+    };
+};
 
 try {
     const { exerciseHours, target } = parseArg(process.argv);

@@ -21,11 +21,11 @@ const parseArgs = (args: Array<string>): BodyValues => {
         return {
             weight: Number(args[2]),
             height: Number(args[3])
-        } 
+        }; 
     } else {
         throw new Error('Provided values were not numbers!');
     }
-}
+};
 
 const isInRange = (min: number, max: number, num: number): boolean => 
     num >= min && num <= max;
@@ -33,7 +33,7 @@ const isInRange = (min: number, max: number, num: number): boolean =>
 export const calculateBmi = (weight: number, height: number): number => {
     const bmi = (weight / height / height) * 10000;
     return bmi;
-}
+};
 
 export const getBmiCategory = (bmi: number): bmiCategory => {
     if(bmi < 16.0) {
@@ -53,7 +53,7 @@ export const getBmiCategory = (bmi: number): bmiCategory => {
     } else {
         return 'Obese (Class III)';
     }
-}
+};
 
 try {
     const { weight, height } = parseArgs(process.argv);

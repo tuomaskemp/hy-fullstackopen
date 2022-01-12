@@ -21,7 +21,7 @@ app.get('/bmi', (req, res) => {
             error: 'malformatted parameters'
         });
     }
-})
+});
 
 const PORT = 3003;
 
