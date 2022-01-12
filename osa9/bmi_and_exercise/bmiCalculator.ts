@@ -14,13 +14,13 @@ type bmiCategory =
     'Obese (Class III)';
 
 const parseArgs = (args: Array<string>): BodyValues => {
-    if (args.length < 2) throw new Error('Not enough arguments');
-    if (args.length > 2) throw new Error('Too many arguments');
+    if (args.length < 4) throw new Error('Not enough arguments');
+    if (args.length > 4) throw new Error('Too many arguments');
 
-    if (!isNaN(Number(args[0])) && !isNaN(Number(args[1]))) {
+    if (!isNaN(Number(args[2])) && !isNaN(Number(args[3]))) {
         return {
-            weight: Number(args[0]),
-            height: Number(args[1])
+            weight: Number(args[2]),
+            height: Number(args[3])
         } 
     } else {
         throw new Error('Provided values were not numbers!');
@@ -56,7 +56,7 @@ const getBmiCategory = (bmi: number): bmiCategory => {
 }
 
 try {
-    const { weight, height } = parseArgs(['180', '74']);
+    const { weight, height } = parseArgs(process.argv);
     const bmi = calculateBmi(height, weight);
     console.log(getBmiCategory(bmi));
 } catch (error: unknown) {

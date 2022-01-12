@@ -13,9 +13,11 @@ interface exerciseInput {
     target: number;
 }
 
-const parseArg = (days: Array<string>, target: String): exerciseInput => {
-    if (days.length < 1) throw new Error('Not enough arguments');
-    if (!target) throw new Error('Target not provided');
+const parseArg = (args: Array<string>): exerciseInput => {
+    if (args.length < 4) throw new Error('Not enough arguments');
+    
+    const days = args.slice(3);
+    const target = args[2];
 
     if (!isNaN(Number(target)) && days.every(exercise => !isNaN(Number(exercise)))) {
         return {
@@ -68,7 +70,7 @@ const calculateExercises = (hoursPerEachDay: Array<number>, target: number): Res
 }
 
 try {
-    const { exerciseHours, target } = parseArg(['3', '0', '2', '4.5', '0', '3', '1'], '2');
+    const { exerciseHours, target } = parseArg(process.argv);
     const output = calculateExercises(exerciseHours, target);
     console.log(output);
 } catch (error: unknown) {
