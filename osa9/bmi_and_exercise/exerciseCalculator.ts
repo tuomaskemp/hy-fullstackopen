@@ -50,7 +50,7 @@ const getRatingDescription = (rating: number): string => {
     }
 };
 
-const calculateExercises = (hoursPerEachDay: Array<number>, target: number): Result => {
+export const calculateExercises = (hoursPerEachDay: Array<number>, target: number): Result => {
     const periodLength = hoursPerEachDay.length;
     const trainingDays = hoursPerEachDay.filter(hours => hours > 0).length;
     const average = hoursPerEachDay.reduce((x, y) => x+y, 0)/periodLength;
