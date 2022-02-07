@@ -1,4 +1,4 @@
-import { Gender, NewPatient } from "./types";
+import { Entry, Gender, NewPatient } from "./types";
 
 const isString = (text: unknown): text is string => {
     return typeof text === 'string' || text instanceof String;
@@ -36,13 +36,20 @@ const parseStringField = (field: unknown): string => {
 };
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
+const parseEntries = (entries: any): Array<Entry> => {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+    return entries;
+};
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const toNewPatientEntry = (obj: any): NewPatient => {
   const newEntry: NewPatient = {
-    name: parseStringField(obj.name), 
-    dateOfBirth: parseDate(obj.dateOfBirth), 
-    ssn: parseStringField(obj.ssn), 
-    gender: parseGender(obj.gender), 
-    occupation: parseStringField(obj.occupation)
+      name: parseStringField(obj.name),
+      dateOfBirth: parseDate(obj.dateOfBirth),
+      ssn: parseStringField(obj.ssn),
+      gender: parseGender(obj.gender),
+      occupation: parseStringField(obj.occupation),
+      entries: parseEntries(obj.entries),
   };
 
   return newEntry;

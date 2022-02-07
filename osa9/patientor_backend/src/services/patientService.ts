@@ -1,10 +1,10 @@
 import patients from "../../data/patients";
-import { NewPatient, Patient, PatientSsnExluded } from "../types";
+import { NewPatient, Patient, PatientSsnExluded, PublicPatient } from "../types";
 import {v1 as uuid} from 'uuid';
 
 const getPatientSsnExluded = (): PatientSsnExluded[] => {
-  return patients.map(({ id, name, dateOfBirth, gender, occupation }) => ({
-    id, name, dateOfBirth, gender, occupation
+  return patients.map(({ id, name, dateOfBirth, gender, occupation, entries }) => ({
+    id, name, dateOfBirth, gender, occupation, entries
   }));
 };
 
@@ -18,4 +18,13 @@ const addPatient = (entry: NewPatient): Patient => {
     return newPatient;
 };
 
-export default { getPatientSsnExluded, addPatient };
+const getPublicPatientById = (id: string): PublicPatient => {
+  const patient = patients.find(patient => patient.id === id);
+  if (patient) {
+    return patient;
+  } else {
+    throw new Error('Cannot find patient');
+  }
+};
+
+export default { getPatientSsnExluded, addPatient, getPublicPatientById };
