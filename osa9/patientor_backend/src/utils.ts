@@ -35,8 +35,18 @@ const parseStringField = (field: unknown): string => {
       return field;
 };
 
+const parseType = (type: unknown): string => {
+    if(!type || type !== ("Hospital" || "OccupationalHealthcare" || "HealthCheck")) {
+        throw new Error("Incorrect or missing type: " + type);
+    }
+    return type;
+};
+
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const parseEntries = (entries: any): Array<Entry> => {
+    if (entries.type) {
+        parseType(entries.type);
+    }
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     return entries;
 };

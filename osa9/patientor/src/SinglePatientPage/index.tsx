@@ -1,13 +1,16 @@
 import axios from "axios";
 import React from "react";
 import { useParams } from "react-router-dom";
-import { Card, Header, Icon } from "semantic-ui-react";
+import { Card, Divider, Header } from "semantic-ui-react";
+import DetailCard from "../components/DetailCard";
+import EntriesList from "../components/EntriesList";
+import GenderIcon from "../components/GenderIcon";
 import { apiBaseUrl } from "../constants";
-import { setPatientPageViewed, useStateValue } from "../state";
-import { Patient } from "../types";
+import { setDiagnosis, setPatientPageViewed, useStateValue } from "../state";
+import { Diagnosis, Patient } from "../types";
 
 const SinglePatientPage = () => {
-    const [{ viewedPatients }, dispatch] = useStateValue();
+    const [{ viewedPatients, diagnosis }, dispatch] = useStateValue();
     const { id } = useParams<{ id: string }>();
 
     const patient = viewedPatients.find(patient => patient.id !== id ? null : patient);
@@ -22,9 +25,22 @@ const SinglePatientPage = () => {
                 } catch (e) {
                     console.error(e);
                 }
-            };
-        if(!patient) {
+        };
+        const fetchDiagnosis = async () => {
+            try {
+                const { data: diagnosis } = await axios.get<Diagnosis[]>(
+                    `${apiBaseUrl}/diagnosis`
+                );
+                dispatch(setDiagnosis(diagnosis));
+            } catch (e) {
+                console.log(e);
+            }
+        };
+        if (!patient) {
             void fetchSinglePatient(id);
+        }
+        if (!diagnosis || diagnosis.length < 1) {
+            void fetchDiagnosis();
         }
     }, [dispatch]);
 
@@ -32,36 +48,17 @@ const SinglePatientPage = () => {
         return (
             <div>
                 <Header as='h2'>{patient.name}
-                {patient.gender === "male" ? <Icon name="man" size='big' /> : null}
-                {patient.gender === "female" ? <Icon name="woman" size='big' /> : null}
-                {patient.gender === "other" ? <Icon name="other gender" size='big' /> : null}
+                <GenderIcon gender={patient.gender} />
                 </Header>
                 <Card.Group>
-                    <Card color='yellow'>
-                        <Card.Content>
-                        <Card.Header color='yellow'>SSN</Card.Header>
-                            <Card.Description>
-                                {patient.ssn}
-                            </Card.Description>
-                        </Card.Content>
-                    </Card>
-                    <Card color='yellow'>
-                        <Card.Content>
-                        <Card.Header color='yellow'>Date of Birth</Card.Header>
-                            <Card.Description>
-                                {patient.dateOfBirth}
-                            </Card.Description>
-                        </Card.Content>
-                    </Card>
-                    <Card color='yellow'>
-                        <Card.Content>
-                        <Card.Header color='yellow'>Occupation</Card.Header>
-                            <Card.Description>
-                                {patient.occupation}
-                            </Card.Description>
-                        </Card.Content>
-                    </Card>
+                    <DetailCard header="SSN" description={patient.ssn || 'Cannot load ssn.'} />
+                    <DetailCard header="Date of Birth" description={patient.dateOfBirth || 'Cannot load birthday.'} />
+                    <DetailCard header="Occupation" description={patient.occupation || 'Cannot load occupation.'} />
                 </Card.Group>
+
+                <Header as='h3'>Entries</Header>
+                <EntriesList entries={patient.entries} />
+                <Divider />
             </div>
         );
     }
