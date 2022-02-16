@@ -27,7 +27,7 @@ const HospitalEntryDetails = ({ entry }: { entry: HospitalEntry }) => {
                     </Card.Description>
                 </Card.Content>
                 <Card.Content extra>
-                    <Icon name='heart' />Health Check
+                    <Icon name='hospital' />Hospital
                 </Card.Content>
             </Card>
         </div>

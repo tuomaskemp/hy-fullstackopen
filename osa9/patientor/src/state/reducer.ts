@@ -11,13 +11,13 @@ export type Action =
       payload: Patient;
     }
   | {
-      type: "SET_PATIENT_PAGE_VIEWED";
-      payload: Patient;
-    }
-  | {
       type: "SET_DIAGNOSIS";
       payload: Diagnosis[];
-    };
+    }
+  | {
+    type: "UPDATE_PATIENT",
+    payload: Patient  
+  };
 
 
 export const setPatientList = (patientList: Patient[]): Action => {
@@ -34,17 +34,17 @@ export const addPatient = (patient: Patient): Action => {
   };
 };
 
-export const setPatientPageViewed = (patient: Patient): Action => {
-  return {
-    type: "SET_PATIENT_PAGE_VIEWED",
-    payload: patient
-  };
-};
-
 export const setDiagnosis = (diagnosis: Diagnosis[]): Action => {
   return {
     type: "SET_DIAGNOSIS",
     payload: diagnosis
+  };
+};
+
+export const updatePatient = (patient: Patient): Action => {
+  return {
+    type: "UPDATE_PATIENT",
+    payload: patient
   };
 };
 
@@ -69,22 +69,14 @@ export const reducer = (state: State, action: Action): State => {
           [action.payload.id]: action.payload
         }
       };
-    case "SET_PATIENT_PAGE_VIEWED":
-      if(state.viewedPatients.map(p => p.id).includes(action.payload.id)) {
-        return state;
-      }
-      return {
-        ...state,
-        viewedPatients: [
-          ...state.viewedPatients,
-          action.payload
-        ]
-      };
     case "SET_DIAGNOSIS":
       return {
         ...state,
         diagnosis: action.payload
       };
+    case "UPDATE_PATIENT":
+      state.patients[action.payload.id] = action.payload;
+      return state;
     default:
       return state;
   }

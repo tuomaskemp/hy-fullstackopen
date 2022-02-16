@@ -8,7 +8,7 @@ const EntriesList = ({ entries }: {entries: Entry[]}) => {
     };
     return (
         <div>
-            {entries.length > 0 ? entries.map(entry => (
+            {entries?.length > 0 ? entries.map(entry => (
                 <div key={entry.id} style={style}>
                     <EntryDetails entry={entry} />
                 </div>
