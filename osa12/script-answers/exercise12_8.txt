@@ -1,0 +1,67 @@
+Script started on Thu Mar 17 10:40:10 2022
+Restored session: To 17 Maa 2022 10:38:58 EET
+[1m[7m%[27m[1m[0m                                                                                                                                  ]7;file://Mac.local/Users/tuomas/fullstack/hy-fullstackopen/osa12/script-answers[0m[27m[24m[J[0;31mscript-answers $ [0m[K[?2004hddocker exec -it [7mtodo-backend_mongo_1[27m[20D[27mt[27mo[27md[27mo[27m-[27mb[27ma[27mc[27mk[27me[27mn[27md[27m_[27mm[27mo[27mn[27mg[27mo[27m_[27m1 bash[?2004l
+]0;root@f35bba09fcf9: /root@f35bba09fcf9:/# mongo -u root -p example
+MongoDB shell version v5.0.6
+connecting to: mongodb://127.0.0.1:27017/?compressors=disabled&gssapiServiceName=mongodb
+Implicit session: session { "id" : UUID("38c756ef-3042-42fd-a0fd-72f9814b3074") }
+MongoDB server version: 5.0.6
+================
+Warning: the "mongo" shell has been superseded by "mongosh",
+which delivers improved usability and compatibility.The "mongo" shell has been deprecated and will be removed in
+an upcoming release.
+For installation instructions, see
+https://docs.mongodb.com/mongodb-shell/install/
+================
+Welcome to the MongoDB shell.
+For interactive help, type "help".
+For more comprehensive documentation, see
+	https://docs.mongodb.com/
+Questions? Try the MongoDB Developer Community Forums
+	https://community.mongodb.com
+---
+The server generated these startup warnings when booting: 
+        2022-03-16T20:00:48.026+00:00: Using the XFS filesystem is strongly recommended with the WiredTiger storage engine. See http://dochub.mongodb.org/core/prodnotes-filesystem
+---
+---
+        Enable MongoDB's free cloud-based monitoring service, which will then receive and display
+        metrics about your deployment (disk utilization, CPU, operation statistics, etc).
+
+        The monitoring data will be available on a MongoDB website with a unique URL accessible to you
+        and anyone you share the URL with. MongoDB may use this information to make product
+        improvements and to suggest MongoDB products and deployment options to you.
+
+        To enable free monitoring, run the following command: db.enableFreeMonitoring()
+        To permanently disable this reminder, run the following command: db.disableFreeMonitoring()
+---
+> show dbs[3G[Jshow dbs[11G
+admin         0.000GB
+config        0.000GB
+local         0.000GB
+the_database  0.000GB
+> use the_database[3G[Juse the_database[19G
+switched to db the_database
+> show collections[3G[Jshow collections[19G
+todos
+> db.todos.find({})[3G[Jdb.todos.find({})[20G
+{ "_id" : ObjectId("62323f7bb58a76172a77baee"), "text" : "Write code", "done" : true }
+{ "_id" : ObjectId("62323f7bb58a76172a77baef"), "text" : "Do this today...", "done" : false }
+> db.todos.insertOne({})[3G[Jdb.todos.insertOne[1;34m([0m{})[24G[3G[Jdb.todos.insertOne([1;34m{[0m})[23G[3G[Jdb.todos.insertOne([1;34m{[0m })[24G[3G[Jdb.todos.insertOne({ })[23G[3G[Jdb.todos.insertOne([1;34m{[0m })[24G[3G[Jdb.todos.insertOne({ })[23G[3G[Jdb.todos.insertOne({  })[24G[3G[Jdb.todos.insertOne({  })[23G[3G[Jdb.todos.insertOne({   })[24G[3G[Jdb.todos.insertOne({ T  })[25G[3G[Jdb.todos.insertOne({ Te  })[26G[3G[Jdb.todos.insertOne({ T  })[25G[3G[Jdb.todos.insertOne({   })[24G[3G[Jdb.todos.insertOne({ "  })[25G[3G[Jdb.todos.insertOne({ "t  })[26G[3G[Jdb.todos.insertOne({ "te  })[27G[3G[Jdb.todos.insertOne({ "tex  })[28G[3G[Jdb.todos.insertOne({ "text  })[29G[3G[Jdb.todos.insertOne({ "text"  })[30G[3G[Jdb.todos.insertOne({ "text"   })[31G[3G[Jdb.todos.insertOne({ "text" :  })[32G[3G[Jdb.todos.insertOne({ "text" :   })[33G[3G[Jdb.todos.insertOne({ "text" : "  })[34G[3G[Jdb.todos.insertOne({ "text" : "N  })[35G[3G[Jdb.todos.insertOne({ "text" : "  })[34G[3G[Jdb.todos.insertOne({ "text" : "n  })[35G[3G[Jdb.todos.insertOne({ "text" : "ne  })[36G[3G[Jdb.todos.insertOne({ "text" : "new  })[37G[3G[Jdb.todos.insertOne({ "text" : "new   })[38G[3G[Jdb.todos.insertOne({ "text" : "new t  })[39G[3G[Jdb.todos.insertOne({ "text" : "new to  })[40G[3G[Jdb.todos.insertOne({ "text" : "new tod  })[41G[3G[Jdb.todos.insertOne({ "text" : "new todo  })[42G[3G[Jdb.todos.insertOne({ "text" : "new todo   })[43G[3G[Jdb.todos.insertOne({ "text" : "new todo i  })[44G[3G[Jdb.todos.insertOne({ "text" : "new todo it  })[45G[3G[Jdb.todos.insertOne({ "text" : "new todo ite  })[46G[3G[Jdb.todos.insertOne({ "text" : "new todo item  })[47G[3G[Jdb.todos.insertOne({ "text" : "new todo item"  })[48G[3G[Jdb.todos.insertOne({ "text" : "new todo item",  })[49G[3G[Jdb.todos.insertOne({ "text" : "new todo item",   })[50G[3G[Jdb.todos.insertOne({ "text" : "new todo item", "  })[51G[3G[Jdb.todos.insertOne({ "text" : "new todo item", "d  })[52G[3G[Jdb.todos.insertOne({ "text" : "new todo item", "do  })[53G[3G[Jdb.todos.insertOne({ "text" : "new todo item", "don  })[54G[3G[Jdb.todos.insertOne({ "text" : "new todo item", "done  })[55G[3G[Jdb.todos.insertOne({ "text" : "new todo item", "done"  })[56G[3G[Jdb.todos.insertOne({ "text" : "new todo item", "done"   })[57G[3G[Jdb.todos.insertOne({ "text" : "new todo item", "done" :  })[58G[3G[Jdb.todos.insertOne({ "text" : "new todo item", "done" :   })[59G[3G[Jdb.todos.insertOne({ "text" : "new todo item", "done" : f  })[60G[3G[Jdb.todos.insertOne({ "text" : "new todo item", "done" : fl  })[61G[3G[Jdb.todos.insertOne({ "text" : "new todo item", "done" : f  })[60G[3G[Jdb.todos.insertOne({ "text" : "new todo item", "done" : fa  })[61G[3G[Jdb.todos.insertOne({ "text" : "new todo item", "done" : fal  })[62G[3G[Jdb.todos.insertOne({ "text" : "new todo item", "done" : fals  })[63G[3G[Jdb.todos.insertOne({ "text" : "new todo item", "done" : false  })[64G[3G[Jdb.todos.insertOne({ "text" : "new todo item", "done" : false  })[65G[3G[Jdb.todos.insertOne([1;34m{[0m "text" : "new todo item", "done" : false  })[66G[3G[Jdb.todos.insertOne[1;34m([0m{ "text" : "new todo item", "done" : false  })[67G[3G[Jdb.todos.insertOne({ "text" : "new todo item", "done" : false  })[68G[3G[Jdb.todos.insertOne({ "text" : "new todo item", "done" : false  })[68G
+{
+	"acknowledged" : true,
+	"insertedId" : ObjectId("6232faac88ba361e9f3d883f")
+}
+> [3G[Jdb.todos.insertOne({ "text" : "new todo item", "done" : false  })[68G[3G[Jdb.todos.find({})[20G[3G[Jdb.todos.insertOne({ "text" : "new todo item", "done" : false  })[68G[3G[J[3G[3G[Jdb.todos.insertOne({ "text" : "new todo item", "done" : false  })[68G[3G[Jdb.todos.find({})[20G[3G[Jdb.todos.find({})[20G
+{ "_id" : ObjectId("62323f7bb58a76172a77baee"), "text" : "Write code", "done" : true }
+{ "_id" : ObjectId("62323f7bb58a76172a77baef"), "text" : "Do this today...", "done" : false }
+{ "_id" : ObjectId("6232faac88ba361e9f3d883f"), "text" : "new todo item", "done" : false }
+> 
+bye
+]0;root@f35bba09fcf9: /root@f35bba09fcf9:/# exit
+[1m[7m%[27m[1m[0m                                                                                                                                  ]7;file://Mac.local/Users/tuomas/fullstack/hy-fullstackopen/osa12/script-answers[0m[27m[24m[J[0;31mscript-answers $ [0m[K[?2004heexit[?2004l
+
+Saving session...
+...saving history...truncating history files...
+...completed.
+
+Script done on Thu Mar 17 11:16:42 2022
